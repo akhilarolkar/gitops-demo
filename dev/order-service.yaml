@@ -19,6 +19,12 @@ spec:
           - "-text=Order Service OK"
         ports:
         - containerPort: 5678
+      - name: order1
+        image: hashicorp/http-echo
+        args:
+          - "-text=Order1 Service OK"
+        ports:
+        - containerPort: 5678
 ---
 apiVersion: v1
 kind: Service
