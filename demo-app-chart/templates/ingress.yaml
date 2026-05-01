@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: app-api-gateway
-  namespace: demo-app
+  namespace: {{ .Values.namespace }} # Ensure this isn't hardcoded to 'demo-app'
   annotations:
     # Optional: Adds a small artificial delay or rate limiting if you wanted to simulate gateway policies later
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
