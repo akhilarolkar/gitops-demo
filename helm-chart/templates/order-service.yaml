@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: order-service
-  namespace: dev
+  namespace: {{ .Values.namespace }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.orderService.replicas }}
   selector:
     matchLabels:
       app: order
@@ -15,9 +15,9 @@ spec:
     spec:
       containers:
       - name: order
-        image: hashicorp/http-echo
+        image: {{ .Values.orderService.image }}
         args:
-          - "-text=Order Service OK"
+          - "-text={{ .Values.orderService.text }}"
         ports:
         - containerPort: 5678
 ---
@@ -25,7 +25,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: order-service
-  namespace: dev
+  namespace: {{ .Values.namespace }}
 spec:
   selector:
     app: order
