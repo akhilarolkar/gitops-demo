@@ -15,18 +15,10 @@ spec:
             port:
               number: 80
 
-      - path: /api/users
+      - path: /api
         pathType: Prefix
         backend:
           service:
-            name: user-service
-            port:
-              number: 80
-
-      - path: /api/orders
-        pathType: Prefix
-        backend:
-          service:
-            name: order-service
+            name: api-gateway
             port:
               number: 80
