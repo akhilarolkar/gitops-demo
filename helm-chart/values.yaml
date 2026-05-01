@@ -13,7 +13,7 @@ userService:
 orderService:
   image: hashicorp/http-echo
   text: "Order Service OK"
-  replicas: 2
+  replicas: 1
 
 apiGateway:
   image: nginx
