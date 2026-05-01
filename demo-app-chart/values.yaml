@@ -3,7 +3,7 @@ namespace: demo-app
 # We group all our microservices under this 'apps' block
 apps:
   frontend:
-    replicaCount: 3
+    replicaCount: 2
     image: nginx:alpine
     port: 80
     targetPort: 80
