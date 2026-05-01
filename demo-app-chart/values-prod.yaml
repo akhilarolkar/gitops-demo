@@ -1,0 +1,19 @@
+# demo-app-chart/values-prod.yaml
+
+# Production environment overrides
+namespace: demo-app-prod
+
+apps:
+  frontend:
+    replicaCount: 3 # High availability
+  backend:
+    replicaCount: 3
+  redis:
+    replicaCount: 2
+
+# Example of injecting cloud-specific annotations for production
+ingress:
+  annotations:
+    # Prepare for an AWS Application Load Balancer
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing

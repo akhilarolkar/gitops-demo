@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-microservices-local
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/akhilarolkar/gitops-demo.git' # Replace with your repo URL
+    targetRevision: HEAD
+    path: demo-app-chart
+    helm:
+      valueFiles:
+      - values.yaml       # Base values
+      - values-local.yaml # Local overrides
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: demo-app-local
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

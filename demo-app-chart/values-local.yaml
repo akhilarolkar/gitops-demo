@@ -1,0 +1,12 @@
+# demo-app-chart/values-local.yaml
+
+# Local environment overrides
+namespace: demo-app-local
+
+apps:
+  frontend:
+    replicaCount: 1 # Save resources locally
+  backend:
+    replicaCount: 1
+  redis:
+    replicaCount: 1

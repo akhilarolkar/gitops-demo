@@ -1,20 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: demo-microservices
+  name: demo-microservices-prod
   namespace: argocd
 spec:
   project: default
   source:
     repoURL: 'https://github.com/akhilarolkar/gitops-demo.git' # Replace with your repo URL
     targetRevision: HEAD
-    path: demo-app-chart # Updated: Now points to the Helm chart directory
+    path: demo-app-chart
     helm:
       valueFiles:
-      - values.yaml # Tells Argo CD to use this file for template rendering
+      - values.yaml      # Base values
+      - values-prod.yaml # Production overrides
   destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: demo-app
+    server: 'https://kubernetes.default.svc' # Update this to your EKS cluster URL later
+    namespace: demo-app-prod
   syncPolicy:
     automated:
       prune: true
