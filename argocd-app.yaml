@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: demo-microservices
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/akhilarolkar/gitops-demo.git' # Replace with your repo URL
+    targetRevision: HEAD
+    path: demo-app-chart # Updated: Now points to the Helm chart directory
+    helm:
+      valueFiles:
+      - values.yaml # Tells Argo CD to use this file for template rendering
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: demo-app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true

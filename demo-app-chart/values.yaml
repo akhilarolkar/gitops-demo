@@ -1,0 +1,24 @@
+namespace: demo-app
+
+# We group all our microservices under this 'apps' block
+apps:
+  frontend:
+    replicaCount: 2
+    image: nginx:alpine
+    port: 80
+    targetPort: 80
+  
+  backend:
+    replicaCount: 2
+    image: hashicorp/http-echo:latest
+    args: 
+      - "-text=Hello from the looping Helm chart!"
+      - "-listen=:8080"
+    port: 80
+    targetPort: 8080
+  
+  redis:
+    replicaCount: 1
+    image: redis:alpine
+    port: 6379
+    targetPort: 6379

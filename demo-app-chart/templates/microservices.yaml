@@ -1,0 +1,44 @@
+{{- range $name, $app := .Values.apps }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # The $name variable will be 'frontend', 'backend', or 'redis'
+  name: {{ $name }}
+  namespace: {{ $.Values.namespace }}
+spec:
+  replicas: {{ $app.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ $name }}
+  template:
+    metadata:
+      labels:
+        app: {{ $name }}
+    spec:
+      containers:
+      - name: {{ $name }}
+        image: "{{ $app.image }}"
+        
+        # If the app has args defined in values.yaml, render them
+        {{- if $app.args }}
+        args:
+{{ toYaml $app.args | indent 8 }}
+        {{- end }}
+        
+        ports:
+        - containerPort: {{ $app.targetPort }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ $name }}-service
+  namespace: {{ $.Values.namespace }}
+spec:
+  selector:
+    app: {{ $name }}
+  ports:
+  - port: {{ $app.port }}
+    targetPort: {{ $app.targetPort }}
+{{- end }}
